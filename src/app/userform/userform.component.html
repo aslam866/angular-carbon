@@ -1,0 +1,80 @@
+
+<div *ngIf="showError" style="color:red">Something went wrong!!!</div>
+<input type="text" [(ngModel)]="user.fname">
+<input type="text" [(ngModel)]="user.age">
+<input type="radio" name="gender" [(ngModel)]="user.gender" value="Male">Male
+<input type="radio" name="gender" [(ngModel)]="user.gender" value="Female">Female
+<input type="radio" name="gender" [(ngModel)]="user.gender" value="others">others
+<button (click)="save()">save</button>&nbsp;&nbsp;
+ 
+    <input type="text" (input)="serachByAge($event)">
+
+   
+<ul>
+    <li [hidden]="user.show" *ngFor="let user of users,let i=index" >
+       <div > {{user.fname}},{{user.age}}
+        <button (click)="deleteUser(i)">Delete</button>
+        </div>
+    </li>
+</ul>
+<button (click)="sortUsers()">sort users</button>
+
+<input type="text" [(ngModel)]="api.artist" name="artist">
+<input type="text" [(ngModel)]="api.limit" name="limit">
+
+<button (click)="search()">search</button>
+
+<div>
+    <input type="text" (input)="filterTrack($event)" style="margin-top:10px">
+</div>
+<div *ngIf="tracks.results>0">
+    <select (change)="changeFunction(event)" >
+        <option value="" disabled></option>
+        <option *ngFor="let key of trackKeys" [value]="key">{{key}}</option>
+    </select>
+</div>
+
+<!-- <p [ngClass]="[tracks.resultCount>0 ? 'green' : 'red']">Total count:{{tracks.resultCount}}</p> -->
+
+<p [ngStyle]="{'color':filterCount===0 ? 'red' : 'green'}" >
+    Total count:{{filterCount}}</p>
+<!-- <ol>
+    <li [hidden]="track.show" *ngFor="let track of tracks.results">
+        {{track.collectionPrice}},{{track.artistName}},{{track.show}}
+        <img src="{{track.artworkUrl100}}">
+        <video controls src="{{track.previewUrl}}"></video>
+        
+    </li>
+</ol> -->
+
+<div class="container">
+    <h2>Striped Rows</h2>
+              
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>CollectionPrice</th>
+          <th>ArtistName</th>
+          <th>ImageUrl</th>
+          <th>TrackTimeMillis</th>
+          <th>Audio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr [hidden]="track.show" *ngFor="let track of tracks.results">
+          <td>{{track.collectionPrice | mycurrency:70 | currency:"₹"}}</td>
+          <td>{{track.artistName}}</td>
+          <td>{{track.trackTimeMillis | millisecond}}</td>
+          <td> <img src="{{track.artworkUrl100}}"></td>
+          <td><video controls src="{{track.previewUrl}}"></video></td>
+        </tr>
+     
+      </tbody>
+    </table>
+  </div>
+
+
+<track-data [trackData]="tracks.results" (trackSend)="recevingTrack($event)"></track-data>
+
+
+

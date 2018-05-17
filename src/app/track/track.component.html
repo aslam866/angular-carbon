@@ -1,0 +1,9 @@
+<h1>Hello track data</h1>
+
+<ul>
+  <li *ngFor="let item of trackData">
+     {{item.artistName}}
+  </li>
+</ul>
+
+<button (click)="sendingTrack()">Send Track</button>
